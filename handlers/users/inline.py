@@ -4,7 +4,16 @@ from aiogram.dispatcher.filters import Command, CommandStart
 
 from loader import dp, bot
 from utils.db_api import quick_commands
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters import Command
+from aiogram.types import CallbackQuery
+from aiogram.utils.callback_data import CallbackData
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+
+from keyboards.inline.metabolism import back_kb
+from loader import dp
+from states.Metabolism import Metabolism_state
 
 @dp.inline_handler(text="")
 async def empty_query(query: types.InlineQuery):
@@ -131,7 +140,7 @@ async def answer_gender(call: CallbackQuery, callback_data: dict, state: FSMCont
     today = int(ccal)+int(user.today)
     await commands.update_user_today(id=call.from_user.id, today=int(today))
 
-    user = await commands.select_user(id=call.from_user.id)
+    user = await quick_commands.select_user(id=call.from_user.id)
     await call.message.edit_text(f"<b>Ваша дневная норма -</b> {user.kkal} ККал\n\n"
                              f"<b>Съеденно сегодня</b> {today} ККал\n\n"
                              f"<b>Осталось</b> {int(kkal)-int(today)} <b>ККал до дневной нормы</b>\n\n"
