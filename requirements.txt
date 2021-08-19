@@ -1,0 +1,9 @@
+sqlalchemy
+gino
+asyncpg
+aiogram
+aiohttp
+aioredis
+python-dotenv
+emoji
+apscheduler
